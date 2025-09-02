@@ -5,6 +5,6 @@
 - Delete notes
 
 ## Yet to add features
-[] Add markdown feature
-[] save in browser local storage
-[] edit mode in markdown feature
+[ ] Add markdown feature
+[ ] save in browser local storage
+[ ] edit mode in markdown feature
