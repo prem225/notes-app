@@ -1,0 +1,98 @@
+.container {
+  font-family: 'Roboto';
+}
+
+.title {
+  font-weight: 600;
+  font-size: 25px;
+  margin: 2px;
+}
+
+textarea {
+  width: 30rem;
+  height: 25rem;
+  border: solid;
+  white-space: pre-wrap;
+}
+
+textarea:focus {
+  outline: none;
+}
+
+.add-note {
+  font-weight: 600;
+  font-size: 25px;
+  background-color: white;
+  border-radius: 360px;
+  padding-inline: 10px;
+  border: hidden;
+  transition: 0.3s ease;
+  padding-top: 2px;
+  margin-left: 4px;
+
+}
+
+.add-note:hover {
+  background-color: black;
+  color: white
+}
+
+.title-container {
+  display: flex;
+  flex-direction: row;
+  padding-bottom: 3px;
+}
+
+.window-options {
+  background-color: black;
+  padding: 5px;
+  display: flex;
+  flex-direction: row;
+  margin: 0;
+  justify-content: space-between;
+}
+
+.text-area-container {
+  display: inline-block;
+  margin-left: 0.3rem;
+}
+
+.delete-button,
+.edit-button {
+  font-weight: 600;
+  font-size: 20px;
+  background-color: white;
+  border: hidden;
+  transition: 0.3s ease;
+  margin: 0;
+  margin-left: 0.25rem;
+}
+
+.delete-button:hover {
+  background-color: red;
+  color: white;
+}
+
+.date-time-text {
+  color: white;
+  margin: 0;
+  margin-top: 0.3rem;
+  padding-left: 1rem;
+}
+
+.edit-button:active {
+  color: white;
+  background-color: black;
+}
+
+.toast-container {
+  background-color: green;
+  padding-inline: 1rem;
+  padding-block: 0.01rem;
+  border-radius: 5px;
+}
+
+.toast-message {
+  font-weight: bold;
+  color: white;
+}
