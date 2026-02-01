@@ -1,17 +1,17 @@
 import "./App.css";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useCallback } from "react";
+import Note from "./component/Note";
 
-// uncontrolled input happens
 function App() {
-  const [note, setNote] = useState(() => {
+  const [notes, setNotes] = useState(() => {
     const saved = localStorage.getItem("notes");
     if (!saved) return [];
-
     return JSON.parse(saved).map((n) => ({
       ...n,
       text: typeof n.text === "string" ? n.text : "",
     }));
   });
+
   const textareaRefs = useRef({});
 
   const monthNames = [
@@ -25,56 +25,27 @@ function App() {
     "Aug",
     "Sep",
     "Oct",
+    "Nov",
     "Dec",
   ];
 
-  const updateNoteText = (id, value) => {
-    setNote((prev) =>
+  // 🔒 stable callback
+  const updateNoteText = useCallback((id, value) => {
+    setNotes((prev) =>
       prev.map((n) => (n.id === id ? { ...n, text: value } : n)),
     );
-    console.log("render");
-  };
+  }, []);
 
-  useEffect(() => {
-    localStorage.setItem("notes", JSON.stringify(note));
-  }, [note]);
+  const deleteNote = useCallback((id) => {
+    setNotes((prev) => prev.filter((n) => n.id !== id));
+  }, []);
 
-  const Note = ({ note }) => {
-    return (
-      <div className="text-area-container">
-        <div className="window-options">
-          <p className="date-time-text">
-            {note.date} {note.month} {note.year}, {note.hours}:{note.minutes}:
-            {note.seconds}
-          </p>
-          <div className="right-action-buttons">
-            <button className="edit-button" title="Edit">
-              Edit
-            </button>
-            <button
-              className="delete-button"
-              title="Delete"
-              onClick={() => DeleteNote(note.id)}
-            >
-              Del
-            </button>
-          </div>
-        </div>
-        <textarea
-          className="text-area"
-          placeholder="Type something..."
-          value={note.text ?? ""}
-          onChange={(e) => updateNoteText(note.id, e.target.value)}
-          ref={(el) => (textareaRefs.current[note.id] = el)}
-        />
-      </div>
-    );
-  };
-
-  const AddNote = () => {
+  const addNote = () => {
     const dateTime = new Date();
+    const id = dateTime.getTime();
+
     const newNote = {
-      id: dateTime.getTime(),
+      id,
       date: dateTime.getDate(),
       month: monthNames[dateTime.getMonth()],
       year: dateTime.getFullYear(),
@@ -83,28 +54,38 @@ function App() {
       seconds: String(dateTime.getSeconds()).padStart(2, "0"),
       text: "",
     };
-    setNote((prev) => [...prev, newNote]);
+
+    setNotes((prev) => [...prev, newNote]);
+
+    // focus once, after mount
     setTimeout(() => {
-      textareaRefs.current[newNote.id]?.focus();
+      textareaRefs.current[id]?.focus();
     }, 0);
   };
 
-  const DeleteNote = (id) => {
-    const deleteNote = note.filter((note) => note.id !== id);
-    setNote(deleteNote);
-  };
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(notes));
+  }, [notes]);
 
   return (
     <div className="container">
       <div className="title-container">
         <p className="title">Notes App</p>
-        <button className="add-note" title="new-note" onClick={AddNote}>
+        <button className="add-note" onClick={addNote}>
           +
         </button>
       </div>
+
       <p>Click '+' icon for a new note</p>
-      {note.map((note) => (
-        <Note key={note.id} note={note} />
+
+      {notes.map((note) => (
+        <Note
+          key={note.id}
+          note={note}
+          onUpdate={updateNoteText}
+          onDelete={deleteNote}
+          textareaRef={(el) => (textareaRefs.current[note.id] = el)}
+        />
       ))}
     </div>
   );
