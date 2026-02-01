@@ -1,6 +1,10 @@
-import { memo } from "react";
+import { useState, memo } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 const Note = memo(function Note({ note, onUpdate, onDelete, textareaRef }) {
+  const [isEditing, setIsEditing] = useState(false);
+
   return (
     <div className="text-area-container">
       <div className="window-options">
@@ -10,20 +14,36 @@ const Note = memo(function Note({ note, onUpdate, onDelete, textareaRef }) {
         </p>
 
         <div className="right-action-buttons">
-          <button className="edit-button">Edit</button>
+          <button className="edit-button" onClick={() => setIsEditing(true)}>
+            Edit
+          </button>
           <button className="delete-button" onClick={() => onDelete(note.id)}>
             Del
           </button>
         </div>
       </div>
 
-      <textarea
-        className="text-area"
-        placeholder="Type something..."
-        value={note.text}
-        onChange={(e) => onUpdate(note.id, e.target.value)}
-        ref={textareaRef}
-      />
+      {isEditing ? (
+        <textarea
+          ref={textareaRef}
+          className="text-area"
+          value={note.text}
+          onChange={(e) => onUpdate(note.id, e.target.value)}
+          onBlur={() => setIsEditing(false)}
+          autoFocus
+        />
+      ) : (
+        /* 👁 PREVIEW MODE */
+        <div className="markdown-preview" onClick={() => setIsEditing(true)}>
+          {note.text.trim() ? (
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {note.text}
+            </ReactMarkdown>
+          ) : (
+            <p className="placeholder">Click to write…</p>
+          )}
+        </div>
+      )}
     </div>
   );
 });
