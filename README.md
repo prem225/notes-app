@@ -1,6 +1,6 @@
 # Notes App 📝
 
-A simple and lightweight **notes application** that lets users create, manage, and store notes right in their browser — using **Local Storage** so your notes _persist between sessions_ without needing a backend.
+A simple and lightweight **notes application** that lets users create, manage, and store notes right in their browser — using **Local Storage** so your notes _persist between sessions_ without needing a backend. This is based on Florin pop's project.
 
 ✨ Supports basic Markdown formatting and timestamped entries.
 
@@ -18,11 +18,11 @@ A simple and lightweight **notes application** that lets users create, manage, a
 
 ## 🛠 Technology Stack
 
-| Layer            | Technology                              |               |
-| ---------------- | --------------------------------------- | ------------- |
-| UI / Frontend    | React                                   |               |
-| Data Persistence | Browser Local Storage                   |               |
-| Formatting       | Basic Markdown formatting (client-side) | ([GitHub][1]) |
+| Layer            | Technology                              |
+| ---------------- | --------------------------------------- |
+| UI / Frontend    | React                                   |
+| Data Persistence | Browser Local Storage                   |
+| Formatting       | Basic Markdown formatting (client-side) |
 
 ---
 
@@ -42,7 +42,9 @@ Make sure you have a modern web browser like Chrome, Firefox, Edge, or Safari.
 
 2. **Open the project**
    - Navigate to the project folder
-   - Run `npm start`in your cmd/ powershell
+   - Run `npm install` for depedencies
+   - Run `npm start`in your cmd, powershell or bash.
+   - After Compiled successfully, `ctrl+click` on localhost link
 
 ---
 
