@@ -20,7 +20,7 @@ function App() {
 ## Welcome!
 
 - Click **Edit** to start writing
-- Supports **Markdown**
+- Supports basic **Markdown** syntax
 - Click outside to preview
 - Use \`+\` to add new notes
 
